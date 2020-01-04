@@ -47,6 +47,36 @@ IF %A%==2 GOTO INSTAPP2
 IF %A%==3 GOTO INSTAPP3
 IF %A%==4 GOTO INSTAPP123
 IF %A%==5 GOTO MENU0
+
+:MENU2
+FOR /F "delims=|" %%I IN ('DIR "\\type_your_direction_to_app\*APP1.ipa" /B /O:D /S') DO SET NewestFile1=%%~tI
+FOR /F "delims=|" %%I IN ('DIR "\\type_your_direction_to_app\*APP2.ipa" /B /O:D /S') DO SET NewestFile2=%%~tI
+FOR /F "delims=|" %%I IN ('DIR "\\type_your_direction_to_app\*APP3.ipa" /B /O:D /S') DO SET NewestFile3=%%~tI
+CLS 
+ECHO.
+TYPE naib.txt 
+ECHO.
+ECHO          NEWEST VERSIONS
+ECHO -----------------------------------
+ECHO NOW: %date% %time%
+ECHO -----------------------------------
+ECHO APP1:   %NEWESTFILE1%
+ECHO APP2:   %NEWESTFILE2%
+ECHO APP3:   %NEWESTFILE3%
+ECHO -----------------------------------
+ECHO 1 - NEWEST APP1 - INSTALL
+ECHO 2 - NEWEST APP1 - INSTALL
+ECHO 3 - NEWEST APP1 - INSTALL
+ECHO 4 - ALL APPS 1,2 AND 3 - INSTALL
+ECHO 5 - BACK
+ECHO.
+SET /P A=CHOSE NUMBER AND PRESS ENTER: 
+IF %A%==1 GOTO INSTAPP1ios
+IF %A%==2 GOTO INSTAPP2ios
+IF %A%==3 GOTO INSTAPP3ios
+IF %A%==4 GOTO INSTAPP123ios
+IF %A%==5 GOTO MENU0
+
 :MENU3
 CLS
 ECHO.
@@ -76,6 +106,8 @@ SET /P I=CHOSE NUMBER AND PRESS ENTER:
 IF %I%==1 GOTO ioLOGON
 IF %I%==2 GOTO ioLOGSAV
 IF %I%==4 GOTO MENU0
+
+
 
 :INSTAPP1
 FOR /F "delims=|" %%I IN ('DIR "\\type_your_direction_to_app\*APP1.apk" /B /O:D /S') DO SET NewestFile=%%I
@@ -115,6 +147,49 @@ cmd /c "del /f "%mypath%\APK\APP1.apk"
 cmd /c "del /f "%mypath%\APK\APP2.apk"
 cmd /c "del /f "%mypath%\APK\APP3.apk"
 GOTO MENU1
+
+:INSTAPP1ios
+CMD /c "idevicepair.exe pair"
+CMD /c ideviceinstaller.exe
+FOR /F "delims=|" %%I IN ('DIR "\\type_your_direction_to_app\*APP1.ipa" /B /O:D /S') DO SET NewestFile=%%I
+copy "%NewestFile%" "%mypath%\IPA\APP1.ipa"
+CMD /c "ideviceinstaller -i "%mypath%\IPA\APP1.ipa"
+cmd /c "del /f "%mypath%\IPA\APP1.ipa"
+GOTO MENU2
+:INSTAPP2ios
+CMD /c "idevicepair.exe pair"
+CMD /c ideviceinstaller.exe
+FOR /F "delims=|" %%I IN ('DIR "\\type_your_direction_to_app\*APP2.ipa" /B /O:D /S') DO SET NewestFile=%%I
+copy "%NewestFile%" "%mypath%\IPA\APP2.ipa"
+CMD /c "ideviceinstaller -i "%mypath%\IPA\APP2.ipa"
+cmd /c "del /f "%mypath%\IPA\APP2.ipa"
+GOTO MENU2
+:INSTAPP3ios
+CMD /c "idevicepair.exe pair"
+CMD /c ideviceinstaller.exe
+FOR /F "delims=|" %%I IN ('DIR "\\type_your_direction_to_app\*APP3.ipa" /B /O:D /S') DO SET NewestFile=%%I
+copy "%NewestFile%" "%mypath%\IPA\APP3.ipa"
+CMD /c "ideviceinstaller -i "%mypath%\IPA\APP3.ipa"
+cmd /c "del /f "%mypath%\IPA\APP2.ipa"
+GOTO MENU2
+:INSTAPP123ios
+CMD /c "idevicepair.exe pair"
+CMD /c ideviceinstaller.exe
+FOR /F "delims=|" %%I IN ('DIR "\\type_your_direction_to_app\*APP1.ipa" /B /O:D /S') DO SET NewestFile=%%I
+copy "%NewestFile%" "%mypath%\IPA\APP1.ipa"
+FOR /F "delims=|" %%I IN ('DIR "\\type_your_direction_to_app\*APP2.ipa" /B /O:D /S') DO SET NewestFile=%%I
+copy "%NewestFile%" "%mypath%\IPA\APP2.ipa"
+FOR /F "delims=|" %%I IN ('DIR "\\type_your_direction_to_app\*APP3.ipa" /B /O:D /S') DO SET NewestFile=%%I
+copy "%NewestFile%" "%mypath%\IPA\APP3.ipa"
+CMD /c "ideviceinstaller -i "%mypath%\IPA\APP1.ipa"
+CMD /c "ideviceinstaller -i "%mypath%\IPA\APP2.ipa"
+CMD /c "ideviceinstaller -i "%mypath%\IPA\APP3.ipa"
+cmd /c "del /f "%mypath%\IPA\APP1.ipa"
+cmd /c "del /f "%mypath%\IPA\APP2.ipa"
+cmd /c "del /f "%mypath%\IPA\APP3.ipa"
+GOTO MENU2
+
+
 :anLOGDEL
 CMD /c "adb logcat -c"
 GOTO MENU3
