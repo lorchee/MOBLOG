@@ -115,21 +115,21 @@ IF %I%==5 GOTO MENU0
 :INSTAPP1
 FOR /F "delims=|" %%I IN ('DIR "\\type_your_direction_to_app\*APP1.apk" /B /O:D /S') DO SET NewestFile=%%I
 copy "%NewestFile%" "%mypath%\APK\APP1.apk"
-CMD /c "adb uninstall pl.alior.sit"
+CMD /c "adb uninstall com.yourapp1.packname"
 CMD /c "adb install -d "%mypath%\APK\APP1.apk"
 cmd /c "del /f "%mypath%\APK\APP1.apk
 GOTO MENU1
 :INSTAPP2
 FOR /F "delims=|" %%I IN ('DIR "\\type_your_direction_to_app\*APP2.apk" /B /O:D /S') DO SET NewestFile=%%I
 copy "%NewestFile%" "%mypath%\APK\APP2.apk"
-CMD /c "adb uninstall pl.alior.aib.dev"
+CMD /c "adb uninstall com.yourapp1.packname"
 CMD /c "adb install -d "%mypath%\APK\APP2.apk"
 cmd /c "del /f "%mypath%\APK\APP2.apk
 GOTO MENU1
 :INSTAPP3
 FOR /F "delims=|" %%I IN ('DIR "\\type_your_direction_to_app\*APP3.apk" /B /O:D /S') DO SET NewestFile=%%I
 copy "%NewestFile%" "%mypath%\APK\APP3.apk"
-CMD /c "adb uninstall pl.aliorbank.aib.qa"
+CMD /c "adb uninstall com.yourapp1.packname"
 CMD /c "adb install -d "%mypath%\APK\APP3.apk"
 cmd /c "del /f "%mypath%\APK\APP3.apk"
 GOTO MENU1
